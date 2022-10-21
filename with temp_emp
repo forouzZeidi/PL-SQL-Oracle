@@ -1,0 +1,12 @@
+with temp_emp(emp_id,mng_id,lvl) as 
+(
+select e1.employee_id,e1.manager_id,1 as lvl
+from employees e1
+where e1.manager_id is null
+union all
+select e2.employee_id,e2.manager_id,te.lvl+1
+from  temp_emp  te join employees e2  on e2.manager_id = te.emp_id
+)
+
+select * from temp_emp --where mng_id=100
+order by 1
