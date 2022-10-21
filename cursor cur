@@ -1,0 +1,35 @@
+declare
+  i number := 0;
+  cursor cur is
+    select e.employee_id emp_id,e.first_name fname,e.last_name lname 
+    from employees e,employees e1,employees e2;
+    
+    v_emp_id number;
+    v_fname varchar2(100);
+    v_lname varchar2(100);
+begin
+  
+    for c in cur
+      loop
+          i := i+1;
+          --dbms_output.put_line(i||'-'||c.emp_id || '-' || c.fname || '-' || c.lname);
+          
+          insert into numbers values(i);
+      
+      end loop; 
+      
+      /*
+      open cur;
+      
+      loop
+        i := i+1;
+
+        fetch cur into v_emp_id,v_fname,v_lname;
+        --dbms_output.put_line(i||'-'||v_emp_id || '-' || v_fname || '-' || v_lname);
+        exit when cur%notfound;
+      end loop;      
+      
+      close cur;
+*/
+commit;
+end;
