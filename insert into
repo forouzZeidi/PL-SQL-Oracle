@@ -1,0 +1,38 @@
+declare
+  n number := 900;
+  v_error boolean;
+begin
+  v_error := false;
+  for i in 1..1000
+    loop
+      
+    begin
+      insert into numbers values(i/n);
+    exception 
+         when others then
+           ins_errors_prc(
+                 v_str_package => null,
+                 v_str_procedure => null,
+                 v_str_function => null,
+                 v_str_object => 'file sql 1010 1399/10/10',
+                 v_num_error_code => sqlcode,
+                 v_des_error_code => sqlerrm,
+                 v_table_info => 'i=' || i ||'-n='||n
+                 );
+                 v_error := true;
+    end;       
+      n := n-1;
+    end loop;
+    
+    if v_error then
+      dbms_output.put_line('rollback');
+        rollback;      
+    else
+           dbms_output.put_line('commit');
+
+                 commit;
+    end if;          
+
+    
+
+end;
