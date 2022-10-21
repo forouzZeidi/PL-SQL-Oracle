@@ -1,0 +1,7 @@
+
+
+select e.employee_id,e.manager_id,lpad(' ',4*level-1) || sys_connect_by_path(e.employee_id,'/')
+from employees e
+connect by nocycle prior e.employee_id= e.manager_id 
+start with  e.manager_id is null 
+order siblings by e.hire_date
